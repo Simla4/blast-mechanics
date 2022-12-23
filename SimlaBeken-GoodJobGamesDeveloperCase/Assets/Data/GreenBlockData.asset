@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3828376889a42f44b1dbb24e1486f62, type: 3}
+  m_Name: GreenBlockData
+  m_EditorClassIdentifier: 
+  defaultSprite: {fileID: 21300000, guid: c0bdb4ad8b11a2244ad69888c8f4a898, type: 3}
+  firstSprite: {fileID: 21300000, guid: b77d7586dedc7534289944ad15702681, type: 3}
+  secondSprite: {fileID: 21300000, guid: 894cf6414b4921b478039aa1044e7069, type: 3}
+  thirthSprite: {fileID: 21300000, guid: e28281ab01a4cd443b267e18922611f7, type: 3}
