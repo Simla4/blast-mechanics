@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3828376889a42f44b1dbb24e1486f62, type: 3}
   m_Name: PinkBlockData
   m_EditorClassIdentifier: 
+  id: 2
   defaultSprite: {fileID: 21300000, guid: 721e503059ec67247a8b00c9e40b3f5c, type: 3}
   firstSprite: {fileID: 21300000, guid: cfc8ded405a12d64aadd46508cc039ea, type: 3}
   secondSprite: {fileID: 21300000, guid: bae92f90b952c424186838a952d4e467, type: 3}
