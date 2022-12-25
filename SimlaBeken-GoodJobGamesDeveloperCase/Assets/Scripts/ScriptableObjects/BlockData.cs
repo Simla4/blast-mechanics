@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Data", menuName = "ScriptableObjects/BlockData", order = 1)]
 public class BlockData : ScriptableObject
 {
+    public int id;
     public Sprite defaultSprite;
     public Sprite firstSprite;
     public Sprite secondSprite;

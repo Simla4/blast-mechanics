@@ -1,18 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager: MonoSingleton<PoolManager>
 {
-    // Start is called before the first frame update
-    void Start()
+    public Pool<BlockBase> blockPool { get; } = new Pool<BlockBase>();
+    [SerializeField] private BlockBase blockPrefab;
+    private void Awake()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        blockPool.Initialize(blockPrefab);
     }
 }
