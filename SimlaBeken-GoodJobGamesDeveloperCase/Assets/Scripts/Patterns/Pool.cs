@@ -14,9 +14,6 @@ public class Pool<T> : PoolBase where T : Component
     private List<T> active = new List<T>();
     private Stack<T> inactive = new Stack<T>();
 
-    public event Action OnSpwned;
-    public event Action OnDespowned;
-
     public void Initialize(T prefab)
     {
         _prefab = prefab;

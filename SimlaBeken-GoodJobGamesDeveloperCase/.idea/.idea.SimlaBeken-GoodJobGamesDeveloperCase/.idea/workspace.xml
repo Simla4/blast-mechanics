@@ -8,6 +8,11 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$USER_HOME$/Downloads/ToonBlastClone-master/ToonBlastClone-master/Assets/Script/Board/Board.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/ToonBlastClone-master/ToonBlastClone-master/Assets/Script/Managers/GameManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/ToonBlastClone-master/ToonBlastClone-master/Assets/Script/TileScripts/Collaps.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/ToonBlastClone-master/ToonBlastClone-master/Assets/Script/TileScripts/IconMatch.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$USER_HOME$/Downloads/ToonBlastClone-master/ToonBlastClone-master/Assets/Script/TileScripts/Tile.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/pixelshot_demo2/pixelshot_demo2/Assets/Scripts/Manager/LevelManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/pixelshot_demo2/pixelshot_demo2/Assets/Scripts/Manager/PoolManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$USER_HOME$/Downloads/pixelshot_demo2/pixelshot_demo2/Assets/Scripts/Patterens/ObjectPool.cs" root0="SKIP_HIGHLIGHTING" />
@@ -74,6 +79,7 @@
       <workItem from="1671800663631" duration="6279000" />
       <workItem from="1671895676629" duration="5089000" />
       <workItem from="1671993381590" duration="9239000" />
+      <workItem from="1672291329178" duration="22469000" />
     </task>
     <servers />
   </component>
