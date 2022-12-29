@@ -52,7 +52,14 @@ public class BlockBase : MonoBehaviour, ISpawned, IDespawned
         boarCreator.spawnedObjects[coordinates.x, newYPos] = boarCreator.spawnedObjects[coordinates.x, coordinates.y];
         boarCreator.spawnedObjects[coordinates.x, coordinates.y] = null;
         coordinates.y = newYPos;
-        gameObject.name = "Tile" + "( " + coordinates.x + ", " + coordinates.y + " )";
+        gameObject.name = "block" + "( " + coordinates.x + ", " + coordinates.y + " )";
+    }
+
+    public void UpdateInformations(int row, int col)
+    {
+        coordinates.x = row;
+        coordinates.y = col;
+        gameObject.name = "block" + "( " + coordinates.x + ", " + coordinates.y + " )";
     }
 
     public void OnDespawned()

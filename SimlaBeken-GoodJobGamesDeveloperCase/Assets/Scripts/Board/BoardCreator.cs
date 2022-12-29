@@ -9,41 +9,40 @@ public class BoardCreator : MonoSingleton<BoardCreator>
     #region Variables
 
     [Header("Map Values")]
-    [SerializeField] [Range(2, 10)] private int columnVal;
-    [SerializeField] [Range(2, 10)]private int rowVal;
-    [SerializeField] private List<BlockData> blockDataList;
+    [SerializeField] [Range(2, 10)] private int boardSize = 2;
     [SerializeField] private List<Transform> spawnPoints;
+    public List<BlockData> blockDataList;
 
-    [Header("Condition Values")]
-    [SerializeField] private int a = 4;
-    [SerializeField] private int b = 7;
-    [SerializeField] private int c = 9;
+    private TileManager tileManager;
     
     public BlockBase[,] spawnedObjects;
     
     private Pool<BlockBase> blockPool;
 
+    public int BoardSize => boardSize;
+
     #endregion
 
     #region Callbacks
 
+    private void Start()
+    {
+        blockPool = PoolManager.Instance.blockPool;
+        tileManager = TileManager.Instance;
+
+        spawnedObjects = new BlockBase[boardSize, boardSize];
+        
+        StartCoroutine(IECreateBoard());
+    }
+
     private void OnEnable()
     {
-        //EventManager.OnBlockDestroyed += CoroutuneStarter;
+        EventManager.OnBoardShuffle += ShuffleTheBoard;
     }
 
     private void OnDisable()
     {
-        //EventManager.OnBlockDestroyed -= CoroutuneStarter;
-    }
-
-    private void Start()
-    {
-        blockPool = PoolManager.Instance.blockPool;
-
-        spawnedObjects = new BlockBase[columnVal, rowVal];
-        
-        StartCoroutine(IECreateBoard());
+        EventManager.OnBoardShuffle -= ShuffleTheBoard;
     }
 
     #endregion
@@ -52,16 +51,16 @@ public class BoardCreator : MonoSingleton<BoardCreator>
 
     private IEnumerator IECreateBoard()
     {
-        for (int i = 0; i < rowVal; i++)
+        for (int i = 0; i < boardSize; i++)
         {
-            for (int j = 0; j < columnVal; j++)
+            for (int j = 0; j < boardSize; j++)
             {
                 CreateBlock(i, j);
             }
             yield return  new  WaitForSeconds(0.25f);
         }
         
-        ChangeMaterails();
+        EventManager.OnMaterialChanged?.Invoke();
     }
 
     private BlockBase CreateBlock(int i, int j)
@@ -88,9 +87,9 @@ public class BoardCreator : MonoSingleton<BoardCreator>
     private void CheckRows()
     {
         int nullCount = 0;
-        for (int i = 0; i < rowVal; i++)
+        for (int i = 0; i < boardSize; i++)
         {
-            for (int j = 0; j < columnVal; j++)
+            for (int j = 0; j < boardSize; j++)
             {
                 if (spawnedObjects[i,j] == null)
                     nullCount++;
@@ -103,9 +102,9 @@ public class BoardCreator : MonoSingleton<BoardCreator>
     
     private IEnumerator RefillBoard()
     {
-        for (int i = 0; i < rowVal; i++)
+        for (int i = 0; i < boardSize; i++)
         {
-            for (int j = 0; j < columnVal; j++)
+            for (int j = 0; j < boardSize; j++)
             {
                 if (spawnedObjects[j, i] == null)
                 {
@@ -115,12 +114,12 @@ public class BoardCreator : MonoSingleton<BoardCreator>
             }
         }
         
-        ChangeMaterails();
+        EventManager.OnMaterialChanged?.Invoke();
     }
     
-    public void DestroyTiles(BlockBase blockBase)
+    public void DestroyBlocks(BlockBase blockBase)
     {
-        List<BlockBase> neighbors = FindBlocks(blockBase);
+        List<BlockBase> neighbors = tileManager.FindBlocks(blockBase); 
 
         if (neighbors.Count > 1)
         {
@@ -144,123 +143,35 @@ public class BoardCreator : MonoSingleton<BoardCreator>
         CheckRows();
         StartCoroutine(RefillBoard());
     }
-
-    private void ChangeMaterails()
+    private void ShuffleTheBoard(int singleBlockCount)
     {
-        for (int i = 0; i < rowVal; i++)
+        if (singleBlockCount >= boardSize * boardSize)
         {
-            for (int j = 0; j < columnVal; j++)
-            {
-            List<BlockBase> listTemp = FindBlocks(spawnedObjects[i,j]);
+            Debug.Log("Shuffle the board worked");
             
-            int size = listTemp.Count;
-            
-                if (size >= a && size < b)
+            for (int i = 0; i < boardSize; i++)
+            {
+                for (int j = 0; j < boardSize; j++)
                 {
-                    var newSprite = listTemp[0].blockData.firstSprite;
-                    ChangeIcons(listTemp, newSprite);
-
+                    var newIndex1 = Random.Range(0, boardSize);
+                    var newIndex2 = Random.Range(0, boardSize);
+                    
+                    spawnedObjects[i, j].UpdateInformations(newIndex1, newIndex2);
+                    spawnedObjects[newIndex1, newIndex2].UpdateInformations(i, j);
+                    
+                    spawnedObjects[i, j].transform.SetParent(spawnPoints[newIndex2]);
+                    spawnedObjects[newIndex1, newIndex2].transform.SetParent(spawnPoints[j]);
+                    
+                    (spawnedObjects[i, j].transform.position, spawnedObjects[newIndex1, newIndex2].transform.position) =
+                        (spawnedObjects[newIndex1, newIndex2].transform.position, spawnedObjects[i, j].transform.position);
+                    
+                    (spawnedObjects[i, j], spawnedObjects[newIndex1, newIndex2]) =
+                             (spawnedObjects[newIndex1, newIndex2], spawnedObjects[i, j]);
                 }
-                else if (size >= b && size < c)
-                {
-                    var newSprite = listTemp[0].blockData.firstSprite;
-                    ChangeIcons(listTemp, newSprite);
-
-                }
-                else if (size > c)
-                {
-                    var newSprite = listTemp[0].blockData.firstSprite;
-                    ChangeIcons(listTemp, newSprite);
-                }
             }
-        }
-    }
-    
-    private void ChangeIcons(List<BlockBase> list, Sprite newSprite)
-    {
-        foreach (BlockBase t in list)
-        {
-            t.gameObject.SetActive(false);
-            t.spriteRenderer.sprite = newSprite;
-            t.transform.gameObject.SetActive(true);         
-        }
-    }
-
-    private List<GameObject> SearchNeighbors(BlockBase tile)
-    {
-        List<GameObject> neighbors = new List<GameObject>();
-        int xIndex = tile.coordinates.x;
-        int yIndex = tile.coordinates.y;
-
-        if (xIndex - 1 >= 0 && xIndex - 1 < columnVal)
-        {
-            if (spawnedObjects[xIndex - 1, yIndex] != null && spawnedObjects[xIndex-1,yIndex].blockData.id == tile.blockData.id)
-            {
-                neighbors.Add(spawnedObjects[xIndex - 1,yIndex].gameObject);
-            }
-
-        }
-        if (xIndex + 1 >= 0 && xIndex + 1 < columnVal)
-        {
-            if (spawnedObjects[xIndex + 1, yIndex ] != null && spawnedObjects[xIndex + 1, yIndex].blockData.id == tile.blockData.id)
-            {
-                neighbors.Add(spawnedObjects[xIndex + 1, yIndex].gameObject);
-            }
-        }
-        if (yIndex + 1 >= 0 && yIndex + 1 < rowVal)
-        {
-            if (spawnedObjects[xIndex, yIndex + 1] != null && spawnedObjects[xIndex, yIndex+1].blockData.id == tile.blockData.id)
-            {
-                neighbors.Add(spawnedObjects[xIndex , yIndex+1].gameObject);
-            }
-
-        }
-        if (yIndex - 1 >= 0 && yIndex - 1 < rowVal)
-        {
-            if (spawnedObjects[xIndex, yIndex - 1] != null && spawnedObjects[xIndex , yIndex-1].blockData.id == tile.blockData.id)
-            {
-                neighbors.Add(spawnedObjects[xIndex , yIndex-1].gameObject);
-            }
-        }
-        return neighbors;
-    }
-
-    private List<BlockBase> FindBlocks(BlockBase tile)
-    {
-        List<GameObject> tileBlockList = new List<GameObject>();
-        Stack<BlockBase> tileStack = new Stack<BlockBase>();
-        
-        if (tile.gameObject != null)
-        {
-        tileBlockList.Add(tile.gameObject);
-        tileStack.Push(tile);
-
-        while (tileStack.Count > 0)
-        {
-            List<GameObject> currentNeighbors = SearchNeighbors(tileStack.Peek());
-            tileStack.Pop();
-            foreach (GameObject g in currentNeighbors)
-            {
-                if (!tileBlockList.Contains(g))
-                {
-                    tileBlockList.Add(g);
-                    tileStack.Push(g.GetComponent<BlockBase>());
-                    }
-            }
-        }
-        }
-
-        List<BlockBase> tileControllerList = new List<BlockBase>();
-      
-        foreach (GameObject g in tileBlockList)
-        {
-            tileControllerList.Add(g.GetComponent<BlockBase>());
         }
         
-        return tileControllerList;
+        EventManager.OnMaterialChanged?.Invoke();
     }
-
-
-
     #endregion
 }

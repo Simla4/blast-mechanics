@@ -19,6 +19,7 @@
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Board/BoardCreator.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Controllers/BlockController.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/EventManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Scripts/Managers/IconManager.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -79,7 +80,7 @@
       <workItem from="1671800663631" duration="6279000" />
       <workItem from="1671895676629" duration="5089000" />
       <workItem from="1671993381590" duration="9239000" />
-      <workItem from="1672291329178" duration="22469000" />
+      <workItem from="1672291329178" duration="29988000" />
     </task>
     <servers />
   </component>

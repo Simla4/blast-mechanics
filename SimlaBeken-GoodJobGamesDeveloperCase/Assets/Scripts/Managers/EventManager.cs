@@ -5,5 +5,6 @@ using UnityEngine;
 
 public static class EventManager
 {
-    public static Action OnBlockDestroyed;
+    public static Action OnMaterialChanged;
+    public static Action<int> OnBoardShuffle;
 }

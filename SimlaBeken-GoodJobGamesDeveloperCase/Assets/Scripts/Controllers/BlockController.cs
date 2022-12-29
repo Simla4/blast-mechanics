@@ -15,7 +15,7 @@ public class BlockController : MonoBehaviour
     
     private void OnMouseDown()
     {
-        BoardCreator.Instance.DestroyTiles(blockBase);
+        BoardCreator.Instance.DestroyBlocks(blockBase);
     }
 
     #endregion
