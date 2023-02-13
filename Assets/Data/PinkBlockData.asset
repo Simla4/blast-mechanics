@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3828376889a42f44b1dbb24e1486f62, type: 3}
+  m_Name: PinkBlockData
+  m_EditorClassIdentifier: 
+  id: 2
+  defaultSprite: {fileID: 21300000, guid: 721e503059ec67247a8b00c9e40b3f5c, type: 3}
+  firstSprite: {fileID: 21300000, guid: cfc8ded405a12d64aadd46508cc039ea, type: 3}
+  secondSprite: {fileID: 21300000, guid: bae92f90b952c424186838a952d4e467, type: 3}
+  thirthSprite: {fileID: 21300000, guid: 90235d6584dc9004ea1746c4969caa17, type: 3}
