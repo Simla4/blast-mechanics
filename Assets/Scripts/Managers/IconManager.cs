@@ -72,13 +72,13 @@ public class IconManager : MonoSingleton<IconManager>
                 }
                 else if (size >= b && size < c)
                 {
-                    var newSprite = listTemp[0].blockData.firstSprite;
+                    var newSprite = listTemp[0].blockData.secondSprite;
                     ChangeIcons(listTemp, newSprite);
 
                 }
                 else if (size > c)
                 {
-                    var newSprite = listTemp[0].blockData.firstSprite;
+                    var newSprite = listTemp[0].blockData.thirthSprite;
                     ChangeIcons(listTemp, newSprite);
                 }
                 
